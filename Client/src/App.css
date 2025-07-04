@@ -1,4 +1,4 @@
-/* Reset some defaults */
+/* Reset and base */
 body, html {
   margin: 0;
   padding: 0;
@@ -7,7 +7,7 @@ body, html {
   color: #ddd;
 }
 
-/* Navbar styling */
+/* Navbar */
 .navbar {
   background-color: #161628;
   color: #fff;
@@ -36,20 +36,113 @@ body, html {
   color: #fff;
 }
 
-/* Page content container */
+/* Page wrapper - centers content vertically and horizontally */
 .page-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  min-height: calc(100vh - 60px);
-  max-width: 800px;
+  padding: 30px 20px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
 }
 
-/* Headings and text */
-h1 {
-  font-size: 2.5rem;
-  margin-bo
+/* Page heading and subheading */
+.page-container h1 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #eee;
+}
+
+.page-container p {
+  font-size: 1.1rem;
+  text-align: center;
+  max-width: 700px;
+  color: #bbb;
+  margin-bottom: 30px;
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 500px;
+  background-color: #181818;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #000;
+}
+
+input, textarea {
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background-color: #222;
+  color: #ddd;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #292954;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #404080;
+}
+
+/* Cards List */
+.cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 700px;
+  margin-top: 20px;
+}
+
+.card {
+  background-color: #181818;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  box-shadow: 0 0 8px #000;
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #eee;
+}
+
+.card p {
+  margin: 5px 0;
+  color: #bbb;
+}
+
+.card button {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-links {
+    margin-top: 10px;
+  }
+
+  .cards-list, form {
+    width: 100%;
+  }
+}
