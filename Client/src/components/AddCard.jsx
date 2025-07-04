@@ -1,10 +1,14 @@
-import './PageContainer.css';
+import AddCardForm from './components/AddCardForm';
+import './App.css';
 
-export default function Add() {
+function AddCard() {
   return (
-    <div className="fullPage">
+    <div className="page-container">
       <h1>Add New Preference Card</h1>
       <p>Fill out the form below to add a new card.</p>
+      <AddCardForm />
     </div>
   );
 }
+
+export default AddCard;
