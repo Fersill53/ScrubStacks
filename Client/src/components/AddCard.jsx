@@ -6,10 +6,7 @@ function AddCard() {
   const navigate = useNavigate();
 
   const handleCardAdded = () => {
-    // Option 1: Redirect to View page
     navigate('/view');
-
-    // Option 2: Show message or refresh (you decide)
   };
 
   return (
