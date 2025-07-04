@@ -3,7 +3,7 @@ import axios from 'axios';
 import AddCardForm from './AddCardForm';
 import EditCardForm from './EditCardForm';
 
-function CardList() {
+function ViewCards() {
   const [cards, setCards] = useState([]);
   const [editingCard, setEditingCard] = useState(null);
 
@@ -64,4 +64,4 @@ function CardList() {
   );
 }
 
-export default CardList;
+export default ViewCards;
