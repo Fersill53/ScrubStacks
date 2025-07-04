@@ -6,11 +6,14 @@ const Card = require('../models/Card');
 router.get('/', async (req, res) => {
   try {
     const cards = await Card.find();
+    console.log('✅ Fetched cards:', cards);
     res.json(cards);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('❌ Error in GET /api/cards:', err);
+    res.status(500).json({ message: err.message, stack: err.stack });
   }
 });
+
 
 // POST new card
 router.post('/', async (req, res) => {

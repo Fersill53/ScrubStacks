@@ -1,4 +1,6 @@
 require('dotenv').config();
+console.log('MONGO_URI:', process.env.MONGO_URI);
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -11,6 +13,9 @@ app.use(express.json());
 
 // Routes
 app.use('/api/cards', require('./server/routes/cards'));
+
+
+mongoose.set('debug', true);
 
 // Database connection
 mongoose.connect(process.env.MONGO_URI, {
