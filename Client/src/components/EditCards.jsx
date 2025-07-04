@@ -36,3 +36,5 @@ function EditCards() {
         </div>
     );
 }
+
+export default EditCards;
