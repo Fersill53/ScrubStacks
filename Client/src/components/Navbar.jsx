@@ -1,36 +1,22 @@
 import { Link } from 'react-router-dom';
+import styles from './Navbar.module.css';
 
 function Navbar() {
   return (
-    <nav style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: '12px 24px',
-      backgroundColor: '#222',
-      color: '#fff'
-    }}>
-      <div style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-        <Link to="/" style={{ color: '#fff', textDecoration: 'none' }}>
+    <nav className={styles.navbar}>
+      <div className={styles.navContent}>
+        <Link to="/" className={styles.brand}>
           ScrubStack
         </Link>
-      </div>
-      <div>
-        <Link to="/" style={linkStyle}>Home</Link>
-        <Link to="/view" style={linkStyle}>View</Link>
-        <Link to="/add" style={linkStyle}>Add</Link>
-        <Link to="/edit" style={linkStyle}>Edit Cards</Link>
+        <div className={styles.links}>
+          <Link to="/" className={styles.link}>Home</Link>
+          <Link to="/view" className={styles.link}>View</Link>
+          <Link to="/add" className={styles.link}>Add</Link>
+          <Link to="/edit" className={styles.link}>Edit Cards</Link>
+        </div>
       </div>
     </nav>
   );
 }
-
-const linkStyle = {
-  color: '#fff',
-  marginLeft: '16px',
-  textDecoration: 'none',
-  fontSize: '1rem',
-  transition: 'color 0.3s',
-};
 
 export default Navbar;

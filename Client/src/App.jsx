@@ -4,6 +4,7 @@ import Home from './components/Home';
 import ViewCards from './components/ViewCards';
 import AddCard from './components/AddCard';
 import EditCards from './components/EditCards';
+import './App.css'
 
 function App() {
   return (

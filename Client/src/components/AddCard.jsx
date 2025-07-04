@@ -1,12 +1,10 @@
-import AddCardForm from "./AddCardForm";
+import './PageContainer.css';
 
-function AddCard() {
-    return (
-        <div style={{ padding: '20px' }}>
-            <h2>Add New Preference Card</h2>
-            <AddCardForm onCardAdded={() => {}} />
-        </div>
-    );
+export default function Add() {
+  return (
+    <div className="fullPage">
+      <h1>Add New Preference Card</h1>
+      <p>Fill out the form below to add a new card.</p>
+    </div>
+  );
 }
-
-export default AddCard;
