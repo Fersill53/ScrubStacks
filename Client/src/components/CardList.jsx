@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import AddCardForm from './AddCardForm';
 
 function CardList() {
   const [cards, setCards] = useState([]);
 
-  useEffect(() => {
+  const fetchCards = () => {
     axios.get('http://localhost:5000/api/cards')
       .then(res => {
         setCards(res.data);
@@ -12,6 +13,10 @@ function CardList() {
       .catch(err => {
         console.error('Error fetching cards:', err);
       });
+  };
+
+  useEffect(() => {
+    fetchCards();
   }, []);
 
   return (
@@ -28,6 +33,7 @@ function CardList() {
           </li>
         ))}
       </ul>
+      <AddCardForm onCardAdded={fetchCards} />
     </div>
   );
 }
