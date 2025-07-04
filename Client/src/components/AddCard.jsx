@@ -10,7 +10,7 @@ function AddCard() {
   };
 
   return (
-    <div className="page-container">
+    <div className="centered-container">
       <h1>Add New Preference Card</h1>
       <p>Fill out the form below to add a new card.</p>
       <AddCardForm onCardAdded={handleCardAdded} />

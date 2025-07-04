@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import './../App.css';
+//import './../App.css';
+import './PageContainer.css'
+
 
 function ViewCards() {
   const [cards, setCards] = useState([]);
@@ -19,7 +21,7 @@ function ViewCards() {
   };
 
   return (
-    <div className="page-container">
+    <div className="fullpage">
       <h1>View Preference Cards</h1>
       <p>Here you can browse all saved surgeon preference cards.</p>
       {cards.length === 0 ? (
