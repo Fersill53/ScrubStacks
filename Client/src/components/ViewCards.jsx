@@ -21,7 +21,7 @@ function ViewCards() {
   };
 
   return (
-    <div className="fullpage">
+    <div className="fullPage">
       <h1>View Preference Cards</h1>
       <p>Here you can browse all saved surgeon preference cards.</p>
       {cards.length === 0 ? (

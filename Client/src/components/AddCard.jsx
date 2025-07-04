@@ -1,6 +1,7 @@
+import './PageContainer.css'
 import { useNavigate } from 'react-router-dom';
-import AddCardForm from './AddCardForm';
-import './../App.css';
+import AddCardForm from './AddCardForm.jsx';
+//import './../App.css';
 
 function AddCard() {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ function AddCard() {
   };
 
   return (
-    <div className="centered-container">
+    <div className="fullPage">
       <h1>Add New Preference Card</h1>
       <p>Fill out the form below to add a new card.</p>
       <AddCardForm onCardAdded={handleCardAdded} />
