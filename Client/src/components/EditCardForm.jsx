@@ -1,34 +1,61 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function EditCardForm({ card, onCancel, onCardUpdated }) {
-  const [surgeonName, setSurgeonName] = useState(card.surgeonName);
-  const [procedure, setProcedure] = useState(card.procedure);
-  const [instruments, setInstruments] = useState(card.instruments.join(', '));
-  const [notes, setNotes] = useState(card.notes);
+  // Early return if card is not available
+  if (!card) {
+    return (
+      <div style={{ padding: '20px', textAlign: 'center' }}>
+        <h3 style={{ color: 'red' }}>No card selected to edit.</h3>
+        <button onClick={onCancel}>Go Back</button>
+      </div>
+    );
+  }
 
+  // Form state
+  const [surgeonName, setSurgeonName] = useState('');
+  const [procedure, setProcedure] = useState('');
+  const [instruments, setInstruments] = useState('');
+  const [notes, setNotes] = useState('');
+
+  // Sync form state when card changes
+  useEffect(() => {
+    setSurgeonName(card.surgeonName || '');
+    setProcedure(card.procedure || '');
+    setInstruments(card.instruments?.join(', ') || '');
+    setNotes(card.notes || '');
+  }, [card]);
+
+  // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const instrumentsArray = instruments.split(',').map(item => item.trim());
+    const instrumentsArray = instruments.split(',').map(item => item.trim()).filter(Boolean);
 
     try {
       await axios.put(`http://localhost:5000/api/cards/${card._id}`, {
         surgeonName,
         procedure,
         instruments: instrumentsArray,
-        notes
+        notes,
       });
-      onCardUpdated();
-      onCancel();
+      if (onCardUpdated) onCardUpdated();
+      if (onCancel) onCancel();
     } catch (err) {
       console.error('Error updating card:', err);
     }
   };
 
   return (
-    <div style={{ border: '1px solid #ccc', padding: '10px', marginTop: '10px' }}>
-      <h3>Edit Preference Card</h3>
+    <div style={{
+      border: '1px solid #444',
+      borderRadius: '8px',
+      padding: '20px',
+      margin: '20px auto',
+      maxWidth: '400px',
+      backgroundColor: '#111',
+      color: '#eee'
+    }}>
+      <h2>Edit Preference Card</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -36,7 +63,7 @@ function EditCardForm({ card, onCancel, onCardUpdated }) {
           value={surgeonName}
           onChange={(e) => setSurgeonName(e.target.value)}
           required
-          style={{ display: 'block', marginBottom: '8px' }}
+          style={{ width: '100%', padding: '8px', marginBottom: '10px' }}
         />
         <input
           type="text"
@@ -44,7 +71,7 @@ function EditCardForm({ card, onCancel, onCardUpdated }) {
           value={procedure}
           onChange={(e) => setProcedure(e.target.value)}
           required
-          style={{ display: 'block', marginBottom: '8px' }}
+          style={{ width: '100%', padding: '8px', marginBottom: '10px' }}
         />
         <input
           type="text"
@@ -52,17 +79,17 @@ function EditCardForm({ card, onCancel, onCardUpdated }) {
           value={instruments}
           onChange={(e) => setInstruments(e.target.value)}
           required
-          style={{ display: 'block', marginBottom: '8px' }}
+          style={{ width: '100%', padding: '8px', marginBottom: '10px' }}
         />
         <textarea
           placeholder="Notes"
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          style={{ display: 'block', marginBottom: '8px', width: '100%' }}
+          style={{ width: '100%', padding: '8px', marginBottom: '10px', height: '100px' }}
         />
-        <div>
-          <button type="submit" style={{ marginRight: '8px' }}>Save</button>
-          <button type="button" onClick={onCancel}>Cancel</button>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <button type="submit" style={{ padding: '8px 16px' }}>Save</button>
+          <button type="button" onClick={onCancel} style={{ padding: '8px 16px' }}>Cancel</button>
         </div>
       </form>
     </div>

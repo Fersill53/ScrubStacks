@@ -1,5 +1,5 @@
-import EditCardForm from './components/EditCardForm';
-import './App.css';
+import EditCardForm from "./EditCardForm";
+import "./../App.css";
 
 function EditCards() {
   return (

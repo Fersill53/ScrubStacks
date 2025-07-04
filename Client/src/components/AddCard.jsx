@@ -1,5 +1,5 @@
-import AddCardForm from './components/AddCardForm';
-import './App.css';
+import AddCardForm from './AddCardForm';
+import './../App.css';
 
 function AddCard() {
   return (
