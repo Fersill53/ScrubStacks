@@ -1,0 +1,42 @@
+.edit-form {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.edit-form label {
+  display: flex;
+  flex-direction: column;
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+.edit-form input,
+.edit-form textarea {
+  background-color: #2a2a2a;
+  border: 1px solid #555;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.edit-form .button-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.edit-form button {
+  background-color: #4db8ff;
+  border: none;
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.edit-form button:hover {
+  background-color: #3399dd;
+}
