@@ -21,15 +21,41 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .card {
+    cursor: pointer;
     background-color: #1e1e1e;
     border: 1px solid #444;
     border-radius: 10px;
     padding: 1.5rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    transition: transform 0.2s ease;
+    transition: all 0.3s ease;
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #fff;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.card p {
+    color: #ccc;
+    margin: 0.25rem 0;
+    font-size: 0.95rem;
+}
+
+.card strong {
+    color: #fff;
+}
+
+.card.expanded {
+    background-color: #2a2a2a;
+    border-color: #666;
 }
 
 .card:hover {
