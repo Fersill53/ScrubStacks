@@ -7,10 +7,12 @@ const CardSchema = new mongoose.Schema({
   notes: String
 }, { timestamps: true });
 
-module.exports = (mongooseConnection) => {
+function getCardModel(connection) {
   try {
-    return mongooseConnection.model('Card');
-  } catch (err) {
-    return mongooseConnection.model('Card', CardSchema, 'cards');
+    return connection.model('Card');
+  } catch (e) {
+    return connection.model('Card', CardSchema, 'cards');
   }
-};
+}
+
+module.exports = getCardModel;
