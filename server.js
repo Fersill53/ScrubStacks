@@ -3,21 +3,25 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-console.log('MONGO_URI from .env =', JSON.stringify(process.env.MONGO_URI));
-
+const MONGO_URI = process.env.MONGO_URI;
+console.log('MONGO_URI from .env =', MONGO_URI);
 
 async function startServer() {
-  const app = express();
-  app.use(cors());
-  app.use(express.json());
+  if (!MONGO_URI) {
+    console.error('❌ MONGO_URI is not defined in .env!');
+    process.exit(1);
+  }
 
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(MONGO_URI, {
       dbName: 'scrubstack'
     });
-    console.log('✅ MongoDB connected!');
+    console.log('✅ MongoDB connected to scrubstack!');
 
-    // Now import routes
+    const app = express();
+    app.use(cors());
+    app.use(express.json());
+
     const cardsRouter = require('./server/routes/cards');
     app.use('/api/cards', cardsRouter);
 

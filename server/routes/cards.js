@@ -1,25 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const Card = require('../models/Card');
+const mongoose = require('mongoose');
+const getCardModel = require('../models/Card');
+
+router.use((req, res, next) => {
+  req.Card = getCardModel(mongoose.connection);
+  next();
+});
 
 // GET all cards
 router.get('/', async (req, res) => {
   try {
-    const cards = await Card.find();
+    const cards = await req.Card.find();
     console.log('✅ Fetched cards:', cards);
     res.json(cards);
   } catch (err) {
     console.error('❌ Error in GET /api/cards:', err);
-    res.status(500).json({ message: err.message, stack: err.stack });
+    res.status(500).json({ message: err.message });
   }
 });
 
-
 // POST new card
 router.post('/', async (req, res) => {
-  const { surgeonName, procedure, instruments, notes } = req.body;
-  const card = new Card({ surgeonName, procedure, instruments, notes });
   try {
+    const { surgeonName, procedure, instruments, notes } = req.body;
+    const card = new req.Card({ surgeonName, procedure, instruments, notes });
     const saved = await card.save();
     res.status(201).json(saved);
   } catch (err) {
@@ -30,7 +35,7 @@ router.post('/', async (req, res) => {
 // PUT update card
 router.put('/:id', async (req, res) => {
   try {
-    const updated = await Card.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updated = await req.Card.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updated);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -40,7 +45,7 @@ router.put('/:id', async (req, res) => {
 // DELETE card
 router.delete('/:id', async (req, res) => {
   try {
-    await Card.findByIdAndDelete(req.params.id);
+    await req.Card.findByIdAndDelete(req.params.id);
     res.json({ message: 'Card deleted' });
   } catch (err) {
     res.status(400).json({ message: err.message });
