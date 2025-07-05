@@ -3,6 +3,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+mongoose.connection.on('connected', async () => {
+  console.log('✅ Connected to DB:', mongoose.connection.name);
+  const collections = await mongoose.connection.db.listCollections().toArray();
+  console.log('✅ Collections:', collections);
+});
+
+
 const MONGO_URI = process.env.MONGO_URI;
 console.log('MONGO_URI from .env =', MONGO_URI);
 
@@ -13,9 +20,8 @@ async function startServer() {
   }
 
   try {
-    await mongoose.connect(MONGO_URI, {
-      dbName: 'scrubstack'
-    });
+    mongoose.set('debug', true);
+    await mongoose.connect(MONGO_URI);
     console.log('✅ MongoDB connected to scrubstack!');
 
     const app = express();
