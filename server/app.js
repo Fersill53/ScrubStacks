@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
+console.log('MONGO_URI from .env =', process.env.MONGO_URI);
 
 const app = express();
 app.use(cors());

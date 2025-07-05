@@ -9,16 +9,19 @@ router.use((req, res, next) => {
 });
 
 // GET all cards
+// GET all cards
 router.get('/', async (req, res) => {
+  console.log('✅ /api/cards called');
   try {
     const cards = await req.Card.find();
     console.log('✅ Fetched cards:', cards);
     res.json(cards);
   } catch (err) {
     console.error('❌ Error in GET /api/cards:', err);
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message, stack: err.stack });
   }
 });
+
 
 // POST new card
 router.post('/', async (req, res) => {
