@@ -3,6 +3,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+console.log('MONGO_URI from .env =', JSON.stringify(process.env.MONGO_URI));
+
+
 async function startServer() {
   const app = express();
   app.use(cors());
