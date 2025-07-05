@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 //import './../App.css';
 import './PageContainer.css'
+import './ViewCards.css';
+
 
 
 function ViewCards() {
@@ -27,7 +29,7 @@ function ViewCards() {
       {cards.length === 0 ? (
         <p>No cards found.</p>
       ) : (
-        <div className="cards-list">
+        <div className="card-container">
           {cards.map(card => (
             <div className="card" key={card._id}>
               <h3>{card.surgeonName}</h3>
