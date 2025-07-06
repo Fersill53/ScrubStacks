@@ -28,7 +28,7 @@ function EditCardForm({ card, onCancel, onCardUpdated }) {
     const instrumentsArray = instruments.split(',').map(item => item.trim()).filter(Boolean);
 
     try {
-      await axios.put(`http://localhost:5000/api/cards/${card._id}`, {
+      await axios.put(`https://scrubstacks.onrender.com/api/cards/${card._id}`, {
         surgeonName,
         procedure,
         instruments: instrumentsArray,

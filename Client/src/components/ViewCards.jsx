@@ -61,7 +61,7 @@ function ViewCards() {
 
   const fetchCards = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/cards');
+      const res = await axios.get('https://scrubstacks.onrender.com/api/cards');
       setCards(res.data);
     } catch (err) {
       console.error('Error fetching cards:', err);

@@ -17,7 +17,7 @@ function AddCardForm({ onCardAdded }) {
       .filter(Boolean);
 
     try {
-      await axios.post('http://localhost:5000/api/cards', {
+      await axios.post('https://scrubstacks.onrender.com/api/cards', {
         surgeonName,
         procedure,
         instruments: instrumentsArray,
