@@ -124,7 +124,7 @@ function EditCards() {
         ...editData,
         instruments: editData.instruments.split(',').map(item => item.trim())
       };
-      await axios.put(`http://localhost:5000/api/cards/${id}`, updated);
+      await axios.put(`https://scrubstacks.onrender.com/api/cards/${id}`, updated);
       fetchCards();
       setEditingCardId(null);
     } catch (err) {
