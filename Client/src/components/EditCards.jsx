@@ -134,7 +134,7 @@ function EditCards() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/cards/${id}`);
+      await axios.delete(`https://scrubstacks.onrender.com/api/cards/${id}`);
       fetchCards();
     } catch (err) {
       console.error('Error deleting card:', err);
