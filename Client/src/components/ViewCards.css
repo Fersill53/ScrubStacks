@@ -1,4 +1,4 @@
-.view-cards-container {
+/*.view-cards-container {
     max-width: 1000px;
     margin: 0 auto;
     padding: 2rem;
@@ -79,7 +79,7 @@
 }
 
 /* Mobile-specific adjustments */
-@media (max-width: 600px) {
+/*@media (max-width: 600px) {
 
     .card-container {
         grid-template-columns: 1fr;
@@ -97,4 +97,82 @@
     .card p {
         font-size: 0.9rem;
     }
+} */
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Base Card Style with Material Feel */
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  color: #333;
+  border: none;
+}
+
+.card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Title */
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #1976d2;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Body Text */
+.card p {
+  margin: 0.35rem 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.card strong {
+  color: #1976d2;
+}
+
+/* Expanded Card State */
+.card.expanded {
+  background-color: #f5f5f5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional ripple simulation on click (just subtle feedback) */
+.card:active {
+  transform: scale(0.98);
+}
+
+/* Mobile Styles */
+@media (max-width: 600px) {
+  .card-container {
+    grid-template-columns: 1fr;
+    padding: 0.5rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+  }
 }
