@@ -80,6 +80,12 @@
 
 /* Mobile-specific adjustments */
 @media (max-width: 600px) {
+
+    .card-container {
+        grid-template-columns: 1fr;
+        padding: 0.5rem;
+    }
+
     .card {
         padding: 1rem;
     }
