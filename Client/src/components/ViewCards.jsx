@@ -51,11 +51,12 @@ import axios from 'axios';
 import './PageContainer.css';
 import './ViewCards.css';
 import { useNavigate } from 'react-router-dom';
-const navigate = useNavigate();
+
 
 function ViewCards() {
   const [cards, setCards] = useState([]);
   const [expandedCardId, setExpandedCardId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCards();
@@ -98,7 +99,7 @@ function ViewCards() {
                   <p><strong>Notes:</strong> {card.notes}</p>
                   <button onClick={(e) => {
                     e.stopPropagation();
-                    Navigate(`/cards/${card._id}`)
+                    navigate(`/cards/${card._id}`)
                   }}>
                     View Full Card
                   </button>
