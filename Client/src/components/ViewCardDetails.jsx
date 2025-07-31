@@ -12,7 +12,7 @@ function ViewCardDetails() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get('https://scrubstacks.onrender.com/api/cards/${id}')
+        axios.get(`https://scrubstacks.onrender.com/api/cards/${id}`)
         .then(res => {
             setCard(res.data);
             setLoading(false);
