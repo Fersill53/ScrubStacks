@@ -1,0 +1,28 @@
+section {
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  text-align: left;
+}
+
+section h2 {
+  color: #66d9ef;
+  margin-bottom: 0.5rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+  background-color: #1c1c1c;
+}
+
+th, td {
+  border: 1px solid #444;
+  padding: 0.5rem;
+  color: #ddd;
+}
+
+thead {
+  background-color: #2b2b2b;
+}
