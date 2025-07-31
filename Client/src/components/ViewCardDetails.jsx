@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './PageContainer.css'
 //will create a new css file named viewcarddetails.css
-import
+import './ViewCardDetails.css'
 
 function ViewCardDetails() {
     const { id } = useParams();
