@@ -50,6 +50,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './PageContainer.css';
 import './ViewCards.css';
+import { useNavigate } from 'react-router-dom';
+const navigate = useNavigate();
 
 function ViewCards() {
   const [cards, setCards] = useState([]);
@@ -94,6 +96,12 @@ function ViewCards() {
                 <>
                   <p><strong>Instruments:</strong> {card.instruments.join(', ')}</p>
                   <p><strong>Notes:</strong> {card.notes}</p>
+                  <button onClick={(e) => {
+                    e.stopPropagation();
+                    Navigate(`/cards/${card._id}`)
+                  }}>
+                    View Full Card
+                  </button>
                 </>
               )}
             </div>
