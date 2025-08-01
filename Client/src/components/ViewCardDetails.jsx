@@ -1,6 +1,6 @@
 //ViewCardDetails.jsx -- this the newly added stuff in case this goes to shit
 
-import { useParams, useNavigate } from 'react-router-dom';
+/*import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './PageContainer.css'
@@ -12,11 +12,20 @@ function ViewCardDetails() {
     const navigate = useNavigate();
     const [card, setCard] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [editMode, setEditMode] = useState(false);
+
+    //Editable Fields
+    const [procedure, setProcedure] = useState('');
+    const [instruments, setInstruments] = useState('');
+    const [notes, setNotes] = useState('');
 
     useEffect(() => {
         axios.get(`https://scrubstacks.onrender.com/api/cards/${id}`)
         .then(res => {
             setCard(res.data);
+            setProcedure(res.data.procedure);
+            setInstruments(res.data.instruments.join(', '));
+            setNotes(res.data.notes || '');
             setLoading(false);
         })
         .catch(err => {
@@ -24,6 +33,22 @@ function ViewCardDetails() {
             setLoading(false);
         });
     }, [id]);
+
+    const handleSave = async () => {
+        try {
+            const updated = {
+                ...card,
+                procedure,
+                instruments: instruments.split(',').map(i => i.trim()),
+                notes
+            };
+            const res = await axios.put(`https://scrubstacks.onrender.com/api/cards/${id}`, updated);
+            setCard(res.data);
+            setEditMode(false);
+        } catch (err) {
+            console.error('Error updating card:', err);
+        }
+    };
 
     if (loading) return <div className="fullPage"><p>Loading...</p></div>;
     if (!card) return <div className="fullPage"><p>Card not found.</p></div>;
@@ -156,4 +181,119 @@ function ViewCardDetails() {
     );
 }
 
+export default ViewCardDetails; */
+
+import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import './PageContainer.css';
+import './ViewCardDetails.css';
+
+function ViewCardDetails() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [card, setCard] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [editMode, setEditMode] = useState(false);
+
+  // Editable fields
+  const [procedure, setProcedure] = useState('');
+  const [instruments, setInstruments] = useState('');
+  const [notes, setNotes] = useState('');
+
+  useEffect(() => {
+    axios.get(`https://scrubstacks.onrender.com/api/cards/${id}`)
+      .then(res => {
+        setCard(res.data);
+        setProcedure(res.data.procedure);
+        setInstruments(res.data.instruments.join(', '));
+        setNotes(res.data.notes || '');
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching card:', err);
+        setLoading(false);
+      });
+  }, [id]);
+
+  const handleSave = async () => {
+    try {
+      const updated = {
+        ...card,
+        procedure,
+        instruments: instruments.split(',').map(i => i.trim()),
+        notes
+      };
+      const res = await axios.put(`https://scrubstacks.onrender.com/api/cards/${id}`, updated);
+      setCard(res.data);
+      setEditMode(false);
+    } catch (err) {
+      console.error('Error updating card:', err);
+    }
+  };
+
+  if (loading) return <div className="fullPage"><p>Loading...</p></div>;
+  if (!card) return <div className="fullPage"><p>Card not found.</p></div>;
+
+  return (
+    <div className="fullPage">
+      <h1>🩺 Full Preference Card</h1>
+
+      <section>
+        <h2>General Information</h2>
+        <p><strong>Surgeon Name:</strong> {card.surgeonName}</p>
+        <p><strong>Procedure:</strong></p>
+        {editMode ? (
+          <input value={procedure} onChange={e => setProcedure(e.target.value)} />
+        ) : (
+          <p>{card.procedure}</p>
+        )}
+      </section>
+
+      <section>
+        <h2>Instruments</h2>
+        {editMode ? (
+          <textarea
+            value={instruments}
+            onChange={e => setInstruments(e.target.value)}
+            rows={4}
+          />
+        ) : (
+          <ul>
+            {card.instruments.map((inst, i) => <li key={i}>{inst}</li>)}
+          </ul>
+        )}
+      </section>
+
+      <section>
+        <h2>Notes / Special Instructions</h2>
+        {editMode ? (
+          <textarea
+            value={notes}
+            onChange={e => setNotes(e.target.value)}
+            rows={4}
+          />
+        ) : (
+          <p>{card.notes || 'None'}</p>
+        )}
+      </section>
+
+      <div style={{ marginTop: '1rem' }}>
+        {editMode ? (
+          <>
+            <button onClick={handleSave}>💾 Save</button>
+            <button onClick={() => setEditMode(false)}>Cancel</button>
+          </>
+        ) : (
+          <button onClick={() => setEditMode(true)}>✏️ Edit This Card</button>
+        )}
+        <button onClick={() => navigate('/view')} style={{ marginLeft: '1rem' }}>Back to Quick View</button>
+      </div>
+    </div>
+  );
+}
+
 export default ViewCardDetails;
+
+// only allows edits to procedure, Instruments, and notes
+//want to take away comma separated for inst
