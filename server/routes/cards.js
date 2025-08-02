@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const getCardModel = require('../models/Card');
+const getCardModel = require('../models/Card.js');
 
 router.use((req, res, next) => {
   req.Card = getCardModel(mongoose.connection);
   next();
 });
 
-// GET all cards
 // GET all cards
 router.get('/', async (req, res) => {
   console.log('✅ /api/cards called');
@@ -26,8 +25,8 @@ router.get('/', async (req, res) => {
 // POST new card
 router.post('/', async (req, res) => {
   try {
-    const { surgeonName, procedure, instruments, notes } = req.body;
-    const card = new req.Card({ surgeonName, procedure, instruments, notes });
+    //const { surgeonName, procedure, instruments, notes } = req.body;
+    const card = new req.Card(req.body);
     const saved = await card.save();
     res.status(201).json(saved);
   } catch (err) {
@@ -55,6 +54,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// FIND card by ID
 router.get('/:id', async (req, res) => {
   try {
     const card = await req.Card.findById(req.params.id);
