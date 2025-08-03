@@ -142,7 +142,7 @@ const handleChange = async (e) => {
   }));
 };
 
-const handle submit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
   const cardData = {
     ...formData,

@@ -25,7 +25,7 @@ const sutureSchema = new mongoose.Schema({
   size: String,
   needle: String,
   useSite: String,
-} { _id: false});
+}, { _id: false});
 
 const CardSchema = new mongoose.Schema({
   surgeonName: String,

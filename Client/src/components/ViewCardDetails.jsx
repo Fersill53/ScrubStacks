@@ -241,13 +241,191 @@ function ViewCardDetails() {
 
       <section>
         <h2>General Information</h2>
-        <p><strong>Surgeon Name:</strong> {card.surgeonName}</p>
+        <p><strong>Surgeon Name:</strong></p> 
+        {editMode ? (
+            <input
+                type='text'
+                value={card.surgeonName}
+                onChange={(e) => setCard({ ...card, surgeonName: e.target.value })} />
+        ) : (
+            <p>{card.surgeonName}</p>
+        )}
+
+        <p><strong>Specialty</strong></p>
+        {editMode ? (
+            <input
+                type='text'
+                value={card.specialty || ''}
+                onChange={(e) => setCard({ ...card, specialty: e.target.value })} />
+        ) : (
+            <p>{card.specialty || 'N/A'}</p>
+        )}
+
         <p><strong>Procedure:</strong></p>
         {editMode ? (
           <input value={procedure} onChange={e => setProcedure(e.target.value)} />
         ) : (
           <p>{card.procedure}</p>
         )}
+
+        <p><strong>Procedure Code (CPT/ICD-10):</strong></p>
+        {editMode ? (
+            <input
+                type='text'
+                value={card.procedureCode || ''}
+                onChange={(e) => setCard({ ...card, procedureCode: e.target.value })}
+                />
+        ) : (
+            <p>{card.procedureCode || 'N/A'}</p>
+        )}
+
+        <p><strong>Surgical Service Line:</strong></p>
+        {editMode ? (
+            <input
+                type='text'
+                value={card.serviceLine || ''}
+                onChange={(e) => setCard({ ...card, serviceLine: e.target.value })}
+                />
+        ) : (
+            <p>{card.serviceLine || 'N/A'}</p>
+        )}
+
+        <p><strong>Anesthesia Type:</strong></p>
+        {editMode ? (
+            <select
+                value={card.anesthesiaType || ''}
+                onChange={(e) => setCard({ ...card, anesthesiaType: e.target.value })}
+                >
+                    <option value="">Select</option>
+                    <option value="General">General</option>
+                    <option value="Regional">Regional</option>
+                    <option value="Local">Local</option>
+                    <option value="MAC">MAC</option>
+                </select>
+        ) : (
+            <p>{card.anesthesiaType || 'N/A'}</p>
+        )}
+        
+        <p><strong>Estimated Case Duration:</strong></p>
+        {editMode ? (
+            <input
+                type='text'
+                value={card.caseDuration || ''}
+                onChange={(e) => setCard({ ...card, caseDuration: e.target.value })}
+                />
+        ) : (
+            <p>{card.caseDuration || 'N/A'}</p>
+        )}
+
+        <p><strong>Postitioning</strong></p>
+        {editMode ? (
+            <input
+                type='text'
+                value={card.positioning || ''}
+                onChange={(e) => setCard({ ...card, positioning: e.target.value })}
+                />
+        ) : (
+            <p>{card.positioning || 'N/A'}</p>
+        )}
+
+        <p><strong>Positioning Aids Needed:</strong></p>
+        {editMode ? (
+            <input
+                type='text'
+                value={card.positioningAids || ''}
+                onChange={(e) => setCard({ ...card, positioningAids: e.target.value })}
+                />
+        ) : (
+            <p>{card.positioningAids || 'N/A'}</p>
+        )}
+
+      </section>
+
+      <section>
+        <h2>Room Setup</h2>
+
+        <p><strong>Room Type / Size:</strong></p>
+        {editMode ? (
+            <input
+                type='text'
+                value={card.roomType || ''}
+                onChange={(e) => setCard({ ..card, roomType: e.target.value })}
+                />
+        ) : (
+            <p>{card.roomType || 'N//A'}</p>
+        )}
+
+        <p><strong>Table Type</strong></p>
+        {editMode ? (
+            <select
+                value={card.tableType || ''}
+                onChange={(e) => setCard({ ...card, tableType: e.target.value })}
+                >
+                    <option value="">Select</option>
+                    <option value="Standard">Standard</option>
+                    <option value="Jackson">Jackson</option>
+                    <option value="Specialty">Specialty</option>
+                </select>
+        ) : (
+            <p>{card.tableType || 'N/A'}</p>
+        )}
+
+        {editMode && card.tableType === 'Specialty' && (
+            <>
+                <p><strong>Specialty Table Name:</strong></p>
+                <input 
+                    type='text'
+                    value={card.specialtyTable || ''}
+                    onChange={(e) => setCard({ ...card, specialtyTable: e.target.value })}
+                />
+                </>
+        )}
+
+        <p><strong>Bed Orientation:</strong></p>
+        {editMode ? (
+            <input
+                type='text'
+                value={card.bedOrientation || ''}
+                onChange={(e) => setCard({ ...card, bedOrientation: e.target.value })}
+                />
+        ) : (
+            <p>{card.bedOrientation || 'N/A'}</p>
+        )}
+
+        <p><strong>Special Equipment:</strong></p>
+        {editMode ? (
+            <div>
+                {['C-Arm', 'Tourniquet', 'Arthroscopy Tower', 'Microscope'].map((item) => (
+                <label key={item} style={{ display: 'block' }}>
+                <input
+                type="checkbox"
+                checked={card.specialEquipment?.includes(item) || false}
+                onChange={(e) => {
+                    const equipment = new Set(card.specialEquipment || []);
+                    e.target.checked ? equipment.add(item) : equipment.delete(item);
+                    setCard({ ...card, specialEquipment: [...equipment] });
+                    }}
+                />
+                {item}
+            </label>
+         ))}
+        <label>
+            <strong>Other:</strong>
+            <input
+                type="text"
+                value={card.specialEquipmentOther || ''}
+                onChange={(e) => setCard({ ...card, specialEquipmentOther: e.target.value })}
+            />
+      </label>
+    </div>
+  ) : (
+    <ul>
+      {(card.specialEquipment || []).map((item, i) => <li key={i}>{item}</li>)}
+      {card.specialEquipmentOther && <li>Other: {card.specialEquipmentOther}</li>}
+      {!card.specialEquipment?.length && !card.specialEquipmentOther && <li>N/A</li>}
+    </ul>
+  )}
+        
       </section>
 
       <section>
