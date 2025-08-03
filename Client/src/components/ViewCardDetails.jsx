@@ -683,6 +683,254 @@ function ViewCardDetails() {
         )}
       </section>
 
+      <section>
+        <h2>Implants / Devices / Reps</h2>
+        {editMode ? (
+            <>
+                <p>
+                    <strong>Vendor(s): </strong>
+                    <input
+                        type='text'
+                        value={card.vendors || ''}
+                        onChange={(e) => setCard({ ...card, implants: e.target.value })}
+                        />
+                </p>
+                <p>
+                    <strong>Implant(s): </strong>
+                    <input
+                        type='text'
+                        value={card.implants || ''}
+                        onChange={(e) => setCard({ ...card, implants: e.target.value })}
+                        />
+                </p>
+                <p>
+                    <strong>Rep Name/Phone: </strong>
+                    <input
+                        type='text'
+                        value={card.repContact || ''}
+                        onChange={(e) => setCard({ ...card, repContact: e.target.value })}
+                        />
+                </p>
+                
+                    <label>
+                        <input
+                            type='checkbox'
+                            checked={card.repRequired || false}
+                            onChange={(e) => setCard({ ...card, repRequired: e.target.checked })}
+                            />
+                            Rep Required In-Room
+                    </label>
+            </>
+        ) : (
+            <>
+                <p><strong>Vendor(s):</strong> {card.vendors || 'None listed'}</p>
+                <p><strong>Implant(s):</strong> {card.implants || 'None listed'}</p>
+                <p><strong>Rep Name/Phone:</strong> {card.repContact || 'N/A'}</p>
+                <p><strong>Rep Required In-Room:</strong> {card.repRequired ? 'Yes' : 'No'}</p>
+            </>
+        )}
+      </section>
+
+      <section>
+        <h2>Supplies</h2>
+
+        {editMode ? (
+            <>
+                {[
+                    'Bovie Pencil',
+                    'Suction Tubing',
+                    'ESU pad',
+                    'Light Handle Covers',
+                    'Stapler',
+                    'Suture Passer',
+                ].map((item) => (
+                    <label key={item} style={{ display: 'block'}}>
+                        <input
+                            type='checkbox'
+                            checked={card.supplies?.include(item) || false}
+                            onChange={(e) => {
+                                const current = new Set(card.supplies || []);
+                                e.target.checked ? current.add(item) : current.delete(item);
+                                setCard({ ...card, supplies: [...current] });
+                            }}
+                            />
+                            {item}
+                    </label>
+                ))}
+                <label>
+                    <strong>Other:</strong>
+                    <input
+                        type='text'
+                        value={card.suppliesOther || ''}
+                        onChange={(e) => setCard({ ...card, suppliesOther: e.target.value })}
+                        />
+                </label>
+            </>
+        ) : (
+            <ul>
+                {(card.supplies || []).map((item, i) => <li key={i}>item</li>)}
+                {card.suppliesOther && <li>Other: {card.suppliesOther}</li>}
+                {!card.supplies?.length && !card.suppliesOther && <li>N/A</li>}
+            </ul>
+        )}
+
+      </section>
+
+      <section>
+        <h2>Medications</h2>
+        {editMode ? (
+            <>
+                {[
+                    'Local Anesthetic',
+                    'Epinephrine',
+                    'Heparin',
+                    'Antibiotics',
+                    'Steroids',
+                    'Contrast Dye',
+                ].map((med) => (
+                    <label key={med} style={{ display: 'block'}}>
+                        <input
+                            type='checkbox'
+                            checked={card.medications?.includes(med) || false}
+                            onChange={(e) => {
+                                const current = new Set(card.medications || []);
+                                e.target.checked ? current.add(med) : current.delete(med);
+                                setCard({ ...card, medications: [...current] });
+                            }}
+                            />
+                            {med}
+                    </label>
+                ))}
+                <label>
+                    <strong>Other:</strong>
+                    <input
+                        type='text'
+                        value={card.medicationsOther || ''}
+                        onChange={(e) => setCard({ ...card, medicationsOther: e.target.value })}
+                        />
+                </label>
+            </>
+        ) : (
+            <ul>
+                {(card.medications || []).map((med, i) => <li key={i}>{med}</li>)}
+                {card.medicationsOther && <li>Other: {card.medicationsOther}</li>}
+                {!card.medications?.length && !card.medicationsOther && <li>N/A</li>}
+            </ul>
+        )}
+      </section>
+
+      <section>
+        <h2>Sutures</h2>
+
+        {editMode ? (
+            <>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Size</th>
+                            <th>Type</th>
+                            <th>Quantity</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {(card.sutures || []).map((suture, i) => (
+                            <tr key={i}>
+                                <td>
+                                    <input
+                                        type='text'
+                                        value={suture.size}
+                                        onChange={(e) => {
+                                            const updated = [...card.sutures];
+                                            updated[i].size = e.target.value;
+                                            setCard({ ...card, sutures: updated });
+                                        }}
+                                        />
+                                </td>
+                                <td>
+                                    <input
+                                        type='text'
+                                        value={suture.type}
+                                        onChange={(e) => {
+                                            const updated = [...card.sutures];
+                                            updated[i].type = e.target.value;
+                                            setCard({ ...card, sutures: updated });
+                                        }}
+                                        />
+                                </td>
+                                <td>
+                                    <input
+                                        type='number'
+                                        min='1'
+                                        value={suture.quantity}
+                                        onChange={(e) => {
+                                            const updated = [...card.sutures];
+                                            updated[i].quantity = parseInt(e.target.value, 10);
+                                            setCard({ ...card, sutures: updated });
+                                        }}
+                                        />
+                                </td>
+                                <td>
+                                    <button
+                                        onClick={() => {
+                                            const updated = [...card.sutures];
+                                            updated.splice(i, 1);
+                                            setCard({ ...card, sutures: updated })
+                                        }}
+                                        >
+                                            🗑️
+                                        </button>
+                                </td>
+                            </tr>
+                        ))}
+                        <tr>
+                            <td colSpan='4'>
+                                <button
+                                    onClick={() =>
+                                        setCard({
+                                            ...card,
+                                            sutures: [
+                                                ...(card.sutures || []),
+                                                { size: '', type: '', quantity: 1 }
+                                            ]
+                                        })
+                                    }
+                                    >
+                                        ➕ Add Suture
+                                    </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </>
+        ) : (
+            <>
+                {(card.sutures?.length > 0) ? (
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Size</th>
+                                <th>Type</th>
+                                <th>Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {card.sutures.map((suture, i) => (
+                                <tr key={i}>
+                                    <td>{suture.size}</td>
+                                    <td>{suture.type}</td>
+                                    <td>{suture.quantity}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>No Sutures Listed</p>
+                )}
+            </>
+        )}
+      </section>
+
       <div style={{ marginTop: '1rem' }}>
         {editMode ? (
           <>
