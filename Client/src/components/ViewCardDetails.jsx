@@ -931,6 +931,48 @@ function ViewCardDetails() {
         )}
       </section>
 
+      <section>
+        <h2>Closing Preferences</h2>
+
+        <p><strong>Suture Type:</strong></p>
+        {editMode ? (
+            <input
+                type='text'
+                value={card.closingPreferences?.sutureType || ''}
+                onChange={(e) => 
+                    setCard({
+                        ...card,
+                        closingPreferences: {
+                            ...card.closingPreferences,
+                            sturueType: e.target.value
+                        }
+                    })
+                }
+                />
+        ) : (
+            <p>{card.closingPreferences?.sutureType || 'N/A'}</p>
+        )}
+
+        <p><strong>Closure Technique:</strong></p>
+        {editMode ? (
+            <input 
+                type='text'
+                value={card.closingPreferences?.closureTechnique || ''}
+                onChange={(e) => 
+                    setCard({
+                        ...card,
+                        closingPreferences: {
+                            closureTechnique: e.target.value
+                        }
+                    })
+                }
+                />
+        ) : (
+            <p>{card.closingPreferences?.closureTechnique || 'N/A'}</p>
+        )}
+
+      </section>
+
       <div style={{ marginTop: '1rem' }}>
         {editMode ? (
           <>
