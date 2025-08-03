@@ -425,7 +425,106 @@ function ViewCardDetails() {
       {!card.specialEquipment?.length && !card.specialEquipmentOther && <li>N/A</li>}
     </ul>
   )}
-        
+      </section>
+
+      <section>
+        <h2>Patient Preparation</h2>
+
+        <p><strong>Prep Area:</strong></p>
+        {editMode ? (
+            <input
+                type='text'
+                value={card.prepArea || ''}
+                onChange={(e) => setCard({ ...card, prepArea: e.target.value})}
+            />
+        ) : (
+            <p>{card.prepArea || 'N/A'}</p>
+        )}
+
+        <p><strong>Prep Solution:</strong></p>
+        {editMode ? (
+            <div>
+                {['Chloraprep', 'Betadine', 'Hibiclens', 'Alcohol'].map((solution) => 
+                    <label key={solution} style={{display: 'block'}}>
+                        <input
+                            type='radio'
+                            name='prepSolution'
+                            checked{card.prepSolution === solution}
+                            onChange={() => setCard({ ...card, prepSolution: solution})}
+                        />
+                        {solution}
+                </label>
+            )}
+            </div>
+        ) : (
+            <p>{card.prepSolution || 'N/A'}</p>
+        )}
+
+        <p><strong>Hair Removal:</strong></p>
+        {editMode ? (
+            <div>
+                {['Clippers', 'Razor', 'None'].map((option) => (
+                    <label key={option} style={{ display: 'block' }}>
+                        <input 
+                            type='radio'
+                            name='hairRemoval'
+                            value={option}
+                            checked={card.hairRemoval === option}
+                            onChange={() => setCard({ ...card, hairRemoval: optioin })}
+                            />
+                            {option}
+                    </label>
+                ))}
+            </div>
+        ) : (
+            <p>{card.hairRemoval || 'N/A'}</p>
+        )}
+
+        <p><strong>Catheter:</strong></p>
+        {editMode ? (
+            <div>
+                {['Foley', 'None'].map((catheter) =>
+                <label key={catheter} style={{display: 'block' }}>
+                    <input
+                        type='radio'
+                        name='catheter'
+                        value={catheter}
+                        checked={card.catheter === catheter}
+                        onChange={() => setCard({ ...card, catheter: catheter })}
+                        />
+                        {catheter}
+                </label>
+                )}
+            </div>
+        ) : (
+            <p>{card.catheter || 'N/A'}</p>
+        )}
+
+        <p><strong>DVT Prophylaxis:</strong></p>
+        {editMode ? (
+            <div>
+                {['SCDs', 'Heparin', 'None'].map((item) => (
+                    <label key={item} style={{ display: 'block' }}>
+                        <input
+                            type='checkbox'
+                            checked={card.dvtProphylaxis?.includes(item) || false}
+                            onChange={(e) => {
+                                const set = new Set(card.dvtProphylaxis || []);
+                                e.target.checked ? set.add(item) : set.delete(item);
+                                setCard({ ...card, dvtProphylaxis: [ ...set] });
+                            }}
+                            />
+                             {item}
+                    </label>
+                ))}
+            </div>
+        ) : (
+            <ul>
+                {(card.dvtProphylaxis || []).map((item, i) => <li key={item}></li>)}
+                {!card.dvtProphylaxis?.length && <li>N/A</li>}
+            </ul>
+        )}
+
       </section>
 
       <section>
