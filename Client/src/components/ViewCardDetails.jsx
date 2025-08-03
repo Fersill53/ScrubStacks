@@ -349,7 +349,7 @@ function ViewCardDetails() {
             <input
                 type='text'
                 value={card.roomType || ''}
-                onChange={(e) => setCard({ ..card, roomType: e.target.value })}
+                onChange={(e) => setCard({ ...card, roomType: e.target.value })}
                 />
         ) : (
             <p>{card.roomType || 'N//A'}</p>
@@ -449,7 +449,7 @@ function ViewCardDetails() {
                         <input
                             type='radio'
                             name='prepSolution'
-                            checked{card.prepSolution === solution}
+                            checked{ ...card.prepSolution === solution}
                             onChange={() => setCard({ ...card, prepSolution: solution})}
                         />
                         {solution}
@@ -528,30 +528,158 @@ function ViewCardDetails() {
       </section>
 
       <section>
-        <h2>Instruments</h2>
+        <h2>Drapes & Covers</h2>
+
+        <p><strong>Standard Drapes:</strong></p>
         {editMode ? (
-          <textarea
-            value={instruments}
-            onChange={e => setInstruments(e.target.value)}
-            rows={4}
-          />
+            <div>
+                {[
+                    'Basic Pack',
+                    'Lithotomy Pack',
+                    'Arthroscopy Drape',
+                    'Extremity Drape',
+                    'Urology Drape',
+                    'Microscope Drape'
+                ].map((drape) => (
+                    <lable key={drape} style={{ display: 'Block' }}>
+                        <input
+                            type='checkbox'
+                            checked={card.drapes?.includes(drape) || false}
+                            onChange={(e) => {
+                                const set = new Set(card.drapes || []);
+                                e.target.checked ? set.add(drape) : set.delete(drape);
+                                setCard({ ...card, drapes: [...set] });
+                            }}
+                            />
+                             {drape}
+                    </lable>
+                ))}
+            </div>
         ) : (
-          <ul>
-            {card.instruments.map((inst, i) => <li key={i}>{inst}</li>)}
-          </ul>
+            <ul>
+                {(card.drapes || []).map((d, i) => <li key={i}>{d}</li>)}
+                {!card.drapes?.length && <li>N/A</li>}
+            </ul>
         )}
+
+        <p><strong>Custom Draping Instructions:</strong></p>
+        {editMode ? (
+            <textarea 
+                rows={3}
+                value={card.customDrapeInstructions || ''}
+                onChange={(e) => 
+                    setCard({ ...card, customDrapeInstructions : e.target.value })
+                }
+                />
+        ) : (
+            <p>{card.customDrapeInstructions || 'None'}</p>
+        )}
+
       </section>
 
       <section>
-        <h2>Notes / Special Instructions</h2>
+        <h2>Instruments</h2>
         {editMode ? (
-          <textarea
-            value={notes}
-            onChange={e => setNotes(e.target.value)}
-            rows={4}
-          />
+            <table>
+                <thead>
+                    <tr>
+                        <th>Instrument / Set Name</th>
+                        <th>Notes</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {(card.instrumentsDetailed || []).map((inst, i) => (
+                        <tr key={i}>
+                            <td>
+                                <input
+                                    type='number'
+                                    value={inst.qty}
+                                    onChange={(e) => {
+                                        const updated = [...card.instrumentsDetailed];
+                                        updated[i].qty = e.target.value;
+                                        setCard({ ...card, instrumentsDetailed: updated });
+                                    }}
+                                    />
+                            </td>
+                            <td>
+                                <input
+                                    type='text'
+                                    value={inst.name}
+                                    onChange={(e) => {
+                                        const updated = [...card.instrumentsDetailed];
+                                        updated[i].name = e.target.value;
+                                        setCard({ ...card, instrumentsDetailed: updated });
+                                    }}
+                                    />
+                            </td>
+                            <td>
+                                <input
+                                    type='text'
+                                    value={inst.notes}
+                                    onChange={(e) => {
+                                        const updated = [...card.instrumentsDetailed];
+                                        updated[i].notes = e.target.value;
+                                        setCard({ ...card, instrumentsDetailed: updated });
+                                    }}
+                                    />
+                            </td>
+                            <td>
+                                <button
+                                    onClick={() => {
+                                        const updated = [...card.instrumentsDetailed];
+                                        updated.splice(i, 1);
+                                        setCard({ ...card, instrumentsDetailed: updated })
+                                    }}
+                                    >
+                                       🗑️ 
+                                    </button>
+                            </td>
+                        </tr>
+                    ))}
+                    <tr>
+                        <td colSpan='4'>
+                            <button 
+                                onClick={() => 
+                                    setCard({
+                                        ...card,
+                                        instrumentsDetailed: [
+                                            ...(card.instrumentsDetailed || []),
+                                            { qty: '', name: '', notes: '' }
+                                        ]
+                                    })
+                                }
+                                
+                                >
+                                    ➕ Add Instrument
+                                </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         ) : (
-          <p>{card.notes || 'None'}</p>
+            (card.instrumentsDetailed?.length > 0 ? (
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Qty</th>
+                            <th>Instrument/Set Name</th>
+                            <th>Notes:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {card.instrumentsDetailed.map((inst, i) => (
+                            <tr key={i}>
+                                <td>{inst.qty}</td>
+                                <td>{inst.name}</td>
+                                <td>{inst.notes}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            ) : (
+                <p>No Detailed Instruments Listed</p>
+            ))
         )}
       </section>
 
