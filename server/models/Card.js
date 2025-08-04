@@ -44,6 +44,7 @@ const CardSchema = new mongoose.Schema({
   tableType: String,
   bedOrientation: String,
   specialEquipment: [String],
+  specialEquipmentOther: String,
 
   //Patient prep
   prepArea: String,
@@ -54,7 +55,7 @@ const CardSchema = new mongoose.Schema({
 
   //Draping
   drapes: [String],
-  customDrapingInstructions: String,
+  customDrapeInstructions: String,
 
   //Instruments
   instrumentsDetailed: [instrumentSchema],
@@ -88,11 +89,11 @@ const CardSchema = new mongoose.Schema({
 
 }, { timestamps: true});
 
-function getCardModel(connection) {
+function getCardModel(Connection) {
   try {
-    return connection.model('Card');
+    return Connection.model('Card');
   } catch (e) {
-    return connection.model('Card', CardSchema, 'cards');
+    return Connection.model('Card', CardSchema, 'cards');
   }
 }
 
