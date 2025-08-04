@@ -171,7 +171,7 @@ const handleSubmit = async (e) => {
 };
 
 return (
-  <form onSubmit={handleSubmit}>
+  <form className="add-card-form" onSubmit={handleSubmit}>
     <h2>General Information</h2>
     <input name="surgeonName" placeholder="Surgeon Name" value={formData.surgeonName} onChange={handleChange} />
     <input name="specialty" placeholder="Specialty" value={formData.specialty} onChange={handleChange} />
