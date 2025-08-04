@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { route } = require('../routes/cards');
 
-const instrumetSchema = new mongoose.Schema({
+const instrumentSchema = new mongoose.Schema({
   qty: Number,
   name: String,
   notes: String,
@@ -27,49 +27,63 @@ const sutureSchema = new mongoose.Schema({
   useSite: String,
 }, { _id: false});
 
+//General info
 const CardSchema = new mongoose.Schema({
   surgeonName: String,
   specialty: String,
   procedure: String,
-  ProcedureCode: String,
-  surgicalServiceLine: String,
+  procedureCode: String,
+  serviceLine: String,
   anesthesiaType: String,
-  estimatedCaseDuration: String,
+  caseDuration: String,
   positioning: String,
   positioningAids: String,
 
+  //Room setup
   roomType: String,
   tableType: String,
   bedOrientation: String,
   specialEquipment: [String],
 
+  //Patient prep
   prepArea: String,
   prepSolution: String,
   hairRemoval: String,
   catheter: String,
   dvtProphylaxis: [String],
 
+  //Draping
   drapes: [String],
   customDrapingInstructions: String,
 
-  instruments: [instrumentSchema],
-  implantsDevicesReps: {
-    vendor: String,
-    implant: String,
-    repNamePhone: String,
-    repRequired: Boolean
-  },
+  //Instruments
+  instrumentsDetailed: [instrumentSchema],
 
+  //Implants / Devices / Reps
+  vendors: String,
+  implants: String,
+  repContact: String,
+  repRequired: Boolean,
+  
+
+  //Supplies
   supplies: [supplySchema],
+  suppliesOther: String,
+
+  //Medications
   medications: [medicationSchema],
+  medicationsOther: String,
+
+  //Sutures
   sutures: [sutureSchema],
 
-  closing: {
-    fascia: String,
-    subcuticular: String,
-    skinClosure: String
+  //Closing Preferences
+  closingPreferences: {
+    sutureType: String,
+    closureTechnique: String,
   },
 
+  //Notes
   notes: String,
 
 }, { timestamps: true});
