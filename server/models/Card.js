@@ -88,7 +88,7 @@ const CardSchema = new mongoose.Schema({
 
 }, { timestamps: true});
 
-function getCardModel(Connection) {
+function getCardModel(connection) {
   try {
     return connection.model('Card');
   } catch (e) {
