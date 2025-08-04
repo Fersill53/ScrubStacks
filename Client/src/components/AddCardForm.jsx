@@ -74,7 +74,7 @@ export default AddCardForm; */
 
 import { useState } from "react";
 import axios from "axios";
-import './AddCardForm.css'
+import './AddCardForm.css';
 
 function AddCardForm({ onCardAdded }) {
   const [formData, setFromData] = useState({
