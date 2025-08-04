@@ -197,17 +197,17 @@ function ViewCardDetails() {
   const [editMode, setEditMode] = useState(false);
 
   // Editable fields
-  const [procedure, setProcedure] = useState('');
+  /*const [procedure, setProcedure] = useState('');
   const [instruments, setInstruments] = useState('');
-  const [notes, setNotes] = useState('');
+  const [notes, setNotes] = useState(''); */
 
   useEffect(() => {
     axios.get(`https://scrubstacks.onrender.com/api/cards/${id}`)
       .then(res => {
         setCard(res.data);
-        setProcedure(res.data.procedure);
+        /*setProcedure(res.data.procedure);
         setInstruments(res.data.instruments.join(', '));
-        setNotes(res.data.notes || '');
+        setNotes(res.data.notes || '');*/
         setLoading(false);
       })
       .catch(err => {
@@ -218,17 +218,23 @@ function ViewCardDetails() {
 
   const handleSave = async () => {
     try {
-      const updated = {
+
+        const res = await axios.put(`https://scrubstacks.com.onrender.com/api/cards/${id}`)
+        setCard(res.data);
+        setEditMode(false);
+      /*const updated = { ...card };
         ...card,
         procedure,
         instruments: instruments.split(',').map(i => i.trim()),
-        notes
+        notes 
       };
       const res = await axios.put(`https://scrubstacks.onrender.com/api/cards/${id}`, updated);
       setCard(res.data);
       setEditMode(false);
     } catch (err) {
-      console.error('Error updating card:', err);
+      console.error('Error updating card:', err);*/
+    } catch (err) {
+        console.error('Error updating card;', err)
     }
   };
 
@@ -449,7 +455,7 @@ function ViewCardDetails() {
                         <input
                             type='radio'
                             name='prepSolution'
-                            checked{ ...card.prepSolution === solution}
+                            checked={card.prepSolution === solution}
                             onChange={() => setCard({ ...card, prepSolution: solution})}
                         />
                         {solution}
@@ -470,7 +476,7 @@ function ViewCardDetails() {
                             name='hairRemoval'
                             value={option}
                             checked={card.hairRemoval === option}
-                            onChange={() => setCard({ ...card, hairRemoval: optioin })}
+                            onChange={() => setCard({ ...card, hairRemoval: option })}
                             />
                             {option}
                     </label>
@@ -541,7 +547,7 @@ function ViewCardDetails() {
                     'Urology Drape',
                     'Microscope Drape'
                 ].map((drape) => (
-                    <lable key={drape} style={{ display: 'Block' }}>
+                    <label key={drape} style={{ display: 'Block' }}>
                         <input
                             type='checkbox'
                             checked={card.drapes?.includes(drape) || false}
@@ -552,7 +558,7 @@ function ViewCardDetails() {
                             }}
                             />
                              {drape}
-                    </lable>
+                    </label>
                 ))}
             </div>
         ) : (
@@ -747,7 +753,7 @@ function ViewCardDetails() {
                     <label key={item} style={{ display: 'block'}}>
                         <input
                             type='checkbox'
-                            checked={card.supplies?.include(item) || false}
+                            checked={card.supplies?.includes(item) || false}
                             onChange={(e) => {
                                 const current = new Set(card.supplies || []);
                                 e.target.checked ? current.add(item) : current.delete(item);
@@ -944,7 +950,7 @@ function ViewCardDetails() {
                         ...card,
                         closingPreferences: {
                             ...card.closingPreferences,
-                            sturueType: e.target.value
+                            sutureType: e.target.value
                         }
                     })
                 }
@@ -962,6 +968,7 @@ function ViewCardDetails() {
                     setCard({
                         ...card,
                         closingPreferences: {
+                            ...card.closingPreferences,
                             closureTechnique: e.target.value
                         }
                     })
@@ -989,6 +996,3 @@ function ViewCardDetails() {
 }
 
 export default ViewCardDetails;
-
-// only allows edits to procedure, Instruments, and notes
-//want to take away comma separated for inst
