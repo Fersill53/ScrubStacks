@@ -251,7 +251,7 @@ function ViewCardDetails() {
         {editMode ? (
             <input
                 type='text'
-                value={card.surgeonName}
+                value={card.surgeonName || ''}
                 onChange={(e) => setCard({ ...card, surgeonName: e.target.value })} />
         ) : (
             <p>{card.surgeonName}</p>
@@ -269,7 +269,10 @@ function ViewCardDetails() {
 
         <p><strong>Procedure:</strong></p>
         {editMode ? (
-          <input value={procedure} onChange={e => setProcedure(e.target.value)} />
+          <input 
+            type='text'
+            value={card.procedure || ''} 
+            onChange={e => setProcedure(e.target.value)} />
         ) : (
           <p>{card.procedure}</p>
         )}
