@@ -1,4 +1,4 @@
-.add-card-form {
+/* .add-card-form {
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
@@ -94,4 +94,126 @@
   padding: 0.4rem 1rem;
   border-radius: 4px;
   cursor: pointer;
+} */
+
+/* AddCardForm.css */
+
+.add-card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: sans-serif;
+}
+
+.add-card-form h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.25rem;
+}
+
+.add-card-form input,
+.add-card-form select,
+.add-card-form textarea {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.add-card-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.add-card-form label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+.add-card-form .inline-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.add-card-form .inline-row select,
+.add-card-form .inline-row input {
+  flex: 1;
+}
+
+.add-card-form .array-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-left: 4px solid #ddd;
+  padding-left: 1rem;
+  margin-top: 1rem;
+}
+
+.add-card-form .array-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.add-card-form button[type='submit'] {
+  margin-top: 2rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.add-card-form button[type='submit']:hover {
+  background-color: #0056b3;
+}
+
+.add-card-form .add-btn,
+.add-card-form .remove-btn {
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+  margin-top: 0.25rem;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-card-form .remove-btn {
+  background-color: #ffdddd;
+  border-color: #cc0000;
+  color: #a00;
+}
+
+.add-card-form .add-btn:hover,
+.add-card-form .remove-btn:hover {
+  opacity: 0.85;
+}
+
+.add-card-form .section-divider {
+  margin-top: 2rem;
+  border-top: 1px solid #ccc;
 }
