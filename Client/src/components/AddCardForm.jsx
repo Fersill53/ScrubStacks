@@ -107,7 +107,7 @@ function AddCardForm({ onCardAdded }) {
     customDraping: '',
 
     // Instruments
-    instruments: '',
+    instrumentsDetailed: [{ qty: '', name: '', notes: '' }],
 
     // Implants / Devices
     vendors: '',
@@ -116,13 +116,13 @@ function AddCardForm({ onCardAdded }) {
     repRequired: false,
 
     // Supplies
-    supplies: '',
+    supplies: [{ qty: '', name: '', sizeOrNotes: ''}],
 
     // Medications
-    medications: '',
+    medications: [{ name: '', dose: '', route: '', timing: ''}],
 
     // Sutures
-    sutures: '',
+    sutures: [{ type: '', size: '', needle: '', useSite: ''}],
 
     // Closing
     fascia: '',
@@ -144,23 +144,7 @@ const handleChange = async (e) => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-  const cardData = {
-    ...formData,
-    
-    instruments: formData.instruments.split(',').map(i => i.trim()),
-
-    drapes: formData.drapes.split(',').map(i => i.trim()),
-
-    specialEquipment: formData.specialEquipment.split(',').map(i => i.trim()),
-
-    supplies: formData.supplies.split(',').map(i => i.trim()),
-
-    medications: formData.medications.split(',').map(i => i.trim()),
-
-    sutures: formData.sutures.split(',').map(i => i.trim())
-
-  };
-
+  const cardData = { ...formData };
   try {
     await axios.post('https://scurbstacks.onrender.com/api/cards', cardData);
     if (onCardAdded) onCardAdded();
@@ -200,7 +184,26 @@ return (
     <textarea name="customDraping" placeholder="Custom Draping Instructions" value={formData.customDraping} onChange={handleChange} />
 
     <h2>Instruments</h2>
-    <input name="instruments" placeholder="Instruments" value={formData.instruments} onChange={handleChange} />
+    {formData.instrumentsDetailed.map((inst, idx) => (
+      <div key={idx}>
+        <input placeholder="Qty" value={inst.qty} onChange={e => {
+          const copy = [...formData.instrumentsDetailed];
+          copy[idx].qty = e.target.value;
+          setFromData({ ...formData, instrumentsDetailed: copy });
+        }} />
+        <input placeholder="Name" value={inst.name} onChange={e => {
+          const copy = [...formData.instrumentsDetailed];
+          copy[idx].name = e.target.value;
+          setFromData({ ...formData, instrumentsDetailed: copy });
+        }} />
+        <input placeholder="Notes" value={inst.notes} onChange={e => {
+          const copy = [...formData.instrumentsDetailed];
+          copy[idx].notes = e.target.value;
+          setFromData({ ...formData, instrumentsDetailed: copy });
+        }} />
+      </div>
+    ))}
+    <button type="button" onClick={() => setFromData({ ...formData, instrumentsDetailed: [...formData.instrumentsDetailed, { qty: '', name: '', notes: '' }] })}>Add Instrument</button>
 
     <h2>Implants / Devices</h2>
     <input name="vendors" placeholder="Vendors" value={formData.vendors} onChange={handleChange} />
@@ -212,13 +215,83 @@ return (
       </label>
 
     <h2>Supplies</h2>
-    <input name="supplies" placeholder="Supplies" value={formData.supplies} onChange={handleChange} />
+    {formData.supplies.map((supply, idx) => (
+      <div key={idx}>
+        <input placeholder="Qty" value={supply.qty} onChange={e => {
+          const copy = [...formData.supplies];
+          copy[idx].qty = e.target.value;
+          setFromData({ ...formData, supplies: copy });
+        }} />
+        <input placeholder="Name" value={supply.name} onChange={e => {
+          const copy = [...formData.supplies];
+          copy[idx].name = e.target.value;
+          setFromData({ ...formData, supplies: copy });
+        }} />
+        <input placeholder="Size/Notes" value={supply.sizeOrNotes} onChange={e => {
+          const copy = [...formData.supplies];
+          copy[idx].sizeOrNotes = e.target.value;
+          setFromData({ ...formData, supplies: copy});
+        }} />
+      </div>
+    ))}
+    <button type="button" onClick={() => setFromData({ ...formData, supplies: [...formData.supplies, { qty: '', name: '', sizeOrNotes: '' }] })}>Add Supply</button>
 
     <h2>Medications</h2>
-    <input name="medications" placeholder="Medications" value={formData.medications} onChange={handleChange} />
+    {formData.medications.map ((med, idx) => (
+      <div key={idx}>
+        <input placeholder="Name" value={med.name} onChange={e => {
+          const copy = [...formData.medications];
+          copy[idx].name = e.target.value;
+          setFromData({ ...formData, medications: copy });
+        }} />
+        <input placeholder="Dose" value={med.dose} onChange={e => {
+          const copy = [...formData.medications];
+          copy[idx].dose = e.target.value;
+          setFromData({ ...formData, medications: copy });
+        }} />
+        <input placeholder="Route" value={med.route} onChange={e => {
+          const copy = [...formData.medications];
+          copy[idx].route = e.target.value;
+          setFromData({ ...formData, medications: copy });
+        }} />
+        <input placeholder="Timing" value={med.timing} onChange={e => {
+          const copy = [...formData.medications];
+          copy[idx].timing = e.target.value;
+          setFromData({ ...formData, medications: copy });
+        }} />
+      </div>
+    ))}
+    <button type="button" onClick={() => setFromData({ ...formData, medications: [...formData.medications, { name: '', dose: '', route: '', timing: ''}] })}>Medications</button>
 
     <h2>Sutures</h2>
-    <input name="sutures" placeholder="Sutures" value={formData.sutures} onChange={handleChange} />
+    {formData.sutures.map ((suture, idx) => (
+      <div key={idx}>
+        <select value={suture.size} onChange={e => {
+          const copy = [...formData.sutures];
+          copy[idx].size = e.target.value;
+          setFromData({ ...formData, sutures: copy });
+        }}>
+          <option value="">Select Size</option>
+          {["5", "4", "3", "2", "1", "0", "2-0", "3-0", "4-0", "5-0", "6-0", "7-0", "8-0", "9-0", "10-0"].map(opt => <option key={opt} value={opt}>{opt}</option>)}
+        </select>
+        <input placeholder="Type" value={suture.type} onChange={e => {
+          const copy = [...formData.sutures];
+          copy[idx].type = e.target.value;
+          setFromData({ ...formData, sutures: copy });
+        }}/>
+        <input placeholder="Needle" value={suture.needle} onChange={e => {
+          const copy = [...formData.sutures];
+          copy[idx].needle = e.target.value;
+          setFromData({ ...formData, sutures: copy});
+        }} />
+        <input placeholder="Use Site" value={suture.useSite} onChange={e => {
+          const copy = [...formData.sutures];
+          copy[idx].useSite = e.target.value;
+          setFromData({ ...formData, sutures: copy });
+        }} />
+      </div>
+    ))}
+    <button type="button" onClick={() => setFromData({ ...formData, sutures: [...formData.sutures, { type: '', size: '', needle: '', useSite: ''}] })}>Add Suture</button>
 
     <h2>Closing Prefernces</h2>
     <input name="fascia" placeholder="Fascia" value={formData.fascia} onChange={handleChange} />
