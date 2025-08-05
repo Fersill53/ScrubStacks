@@ -146,7 +146,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   const cardData = { ...formData };
   try {
-    await axios.post('https://scurbstacks.onrender.com/api/cards', cardData);
+    await axios.post('https://scrubstacks.onrender.com/api/cards', cardData);
     if (onCardAdded) onCardAdded();
   } catch (err) {
     console.error('Error adding Card', err);
