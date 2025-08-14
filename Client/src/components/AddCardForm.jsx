@@ -170,7 +170,15 @@ return (
     <input name="roomType" placeholder="Room Type/Size" value={formData.roomType} onChange={handleChange} />
     <input name="tableType" placeholder="Table Type" value={formData.tableType} onChange={handleChange} />
     <input name="bedOrientation" placeholder="Bed Orientation" value={formData.bedOrientation} onChange={handleChange} />
-    <input name="specialEquipment" placeholder="Special Equipment (comma-separated)" value={formData.specialEquipment} onChange={handleChange} />
+    <textarea 
+      name="specialEquipment" 
+      placeholder="Enter one item per line." 
+      value={Array.isArray(formData.specialEquipment) ? formData.specialEquipment.join('\n') : ''} 
+      onChange={(e) => 
+        setFromData({ ...formData, specialEquipment: e.target.value.split('\n').map(s => s.trim()).filter(Boolean),
+         })
+      } 
+    />
 
     <h2>Patient Preparation</h2>
     <input name="prepArea" placeholder="Prep Area" value={formData.prepArea} onChange={handleChange} />
@@ -180,7 +188,15 @@ return (
     <input name="dvtProphylaxis" placeholder="DVT Prophylaxis" value={formData.dvtProphylaxis} onChange={handleChange} />
 
     <h2>Drapes</h2>
-    <input name="drapes" placeholder="Drapes (comma-separated)" value={formData.drapes} onChange={handleChange} />
+    <textarea 
+      name="drapes"
+      placeholder="Enter one drape item per line." 
+      value={Array.isArray(form.formData.drapes) ? formData.drapes.join('\n') : ''} 
+      onChange={(e) => 
+        setFromData({ ...formData, drapes: e.target.value.split('\n').map(s => s.trim()).filter(Boolean),
+         })
+      } 
+    />
     <textarea name="customDraping" placeholder="Custom Draping Instructions" value={formData.customDraping} onChange={handleChange} />
 
     <h2>Instruments</h2>

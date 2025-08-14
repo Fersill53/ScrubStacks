@@ -541,29 +541,12 @@ function ViewCardDetails() {
 
         <p><strong>Standard Drapes:</strong></p>
         {editMode ? (
-            <div>
-                {[
-                    'Basic Pack',
-                    'Lithotomy Pack',
-                    'Arthroscopy Drape',
-                    'Extremity Drape',
-                    'Urology Drape',
-                    'Microscope Drape'
-                ].map((drape) => (
-                    <label key={drape} style={{ display: 'Block' }}>
-                        <input
-                            type='checkbox'
-                            checked={card.drapes?.includes(drape) || false}
-                            onChange={(e) => {
-                                const set = new Set(card.drapes || []);
-                                e.target.checked ? set.add(drape) : set.delete(drape);
-                                setCard({ ...card, drapes: [...set] });
-                            }}
-                            />
-                             {drape}
-                    </label>
-                ))}
-            </div>
+            <textarea
+                value={(card.drapes || []).join('\n')}
+                onChange={(e) =>
+                    setCard({ ...card, drapes: e.target.value.split('\n').map(d => d.trim()).filter(Boolean) })
+                }
+                />
         ) : (
             <ul>
                 {(card.drapes || []).map((d, i) => <li key={i}>{d}</li>)}
