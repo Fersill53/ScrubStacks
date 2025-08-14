@@ -191,7 +191,7 @@ return (
     <textarea 
       name="drapes"
       placeholder="Enter one drape item per line." 
-      value={Array.isArray(formData.drapes) ? formData.drapes.join('\n') : ''} 
+      value={Array.isArray(formData?.drapes) ? formData.drapes.join('\n') : ''} 
       onChange={(e) => 
         setFromData({ ...formData, drapes: e.target.value.split('\n').map(s => s.trim()).filter(Boolean),
          })
