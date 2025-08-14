@@ -195,6 +195,7 @@ function ViewCardDetails() {
   const [card, setCard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
+ // const [procedure, setProcedure] = useState('');
 
   // Editable fields
   /*const [procedure, setProcedure] = useState('');
@@ -272,7 +273,7 @@ function ViewCardDetails() {
           <input 
             type='text'
             value={card.procedure || ''} 
-            onChange={e => setProcedure(e.target.value)} />
+            onChange={e => setCard(e.target.value)} />
         ) : (
           <p>{card.procedure}</p>
         )}

@@ -191,7 +191,7 @@ return (
     <textarea 
       name="drapes"
       placeholder="Enter one drape item per line." 
-      value={Array.isArray(form.formData.drapes) ? formData.drapes.join('\n') : ''} 
+      value={Array.isArray(formData.drapes) ? formData.drapes.join('\n') : ''} 
       onChange={(e) => 
         setFromData({ ...formData, drapes: e.target.value.split('\n').map(s => s.trim()).filter(Boolean),
          })
@@ -309,10 +309,10 @@ return (
     ))}
     <button type="button" onClick={() => setFromData({ ...formData, sutures: [...formData.sutures, { type: '', size: '', needle: '', useSite: ''}] })}>Add Suture</button>
 
-    <h2>Closing Prefernces</h2>
+    <h2>Closing Preferences</h2>
     <input name="fascia" placeholder="Fascia" value={formData.fascia} onChange={handleChange} />
     <input name="subcuticular" placeholder="Subcuticular" value={formData.subcuticular} onChange={handleChange} />
-    <input name="skinClosure" placeholder="Skin Closuree" value={formData.skinClosure} onChange={handleChange} />
+    <input name="skinClosure" placeholder="Skin Closure" value={formData.skinClosure} onChange={handleChange} />
 
     <h2>Notes / Special Instructions</h2>
     <textarea name="notes" placeholder="Notes" value={formData.notes} onChange={handleChange} />
