@@ -77,7 +77,7 @@ import axios from "axios";
 import './AddCardForm.css';
 
 function AddCardForm({ onCardAdded }) {
-  const [formData, setFromData] = useState({
+  const [formData, setFormData] = useState({
     //General Info
     surgeonName: '',
     specialty: '',
@@ -136,7 +136,7 @@ function AddCardForm({ onCardAdded }) {
 
 const handleChange = async (e) => {
   const { name, value, type, checked } = e.target;
-  setFromData(prev => ({
+  setFormData(prev => ({
     ...prev,
     [name]: type === 'checkbox' ? checked : value
   }));
@@ -175,7 +175,7 @@ return (
       placeholder="Enter one item per line." 
       value={Array.isArray(formData.specialEquipment) ? formData.specialEquipment.join('\n') : ''} 
       onChange={(e) => 
-        setFromData({ ...formData, specialEquipment: e.target.value.split('\n').map(s => s.trim()).filter(Boolean),
+        setFormData({ ...formData, specialEquipment: e.target.value.split('\n').map(s => s.trim()).filter(Boolean),
          })
       } 
     />
@@ -193,7 +193,7 @@ return (
       placeholder="Enter one drape item per line." 
       value={Array.isArray(formData?.drapes) ? formData.drapes.join('\n') : ''} 
       onChange={(e) => 
-        setFromData({ ...formData, drapes: e.target.value.split('\n').map(s => s.trim()).filter(Boolean),
+        setFormData({ ...formData, drapes: e.target.value.split('\n').map(s => s.trim()).filter(Boolean),
          })
       } 
     />
@@ -205,21 +205,21 @@ return (
         <input placeholder="Qty" value={inst.qty} onChange={e => {
           const copy = [...formData.instrumentsDetailed];
           copy[idx].qty = e.target.value;
-          setFromData({ ...formData, instrumentsDetailed: copy });
+          setFormData({ ...formData, instrumentsDetailed: copy });
         }} />
         <input placeholder="Name" value={inst.name} onChange={e => {
           const copy = [...formData.instrumentsDetailed];
           copy[idx].name = e.target.value;
-          setFromData({ ...formData, instrumentsDetailed: copy });
+          setFormData({ ...formData, instrumentsDetailed: copy });
         }} />
         <input placeholder="Notes" value={inst.notes} onChange={e => {
           const copy = [...formData.instrumentsDetailed];
           copy[idx].notes = e.target.value;
-          setFromData({ ...formData, instrumentsDetailed: copy });
+          setFormData({ ...formData, instrumentsDetailed: copy });
         }} />
       </div>
     ))}
-    <button type="button" onClick={() => setFromData({ ...formData, instrumentsDetailed: [...formData.instrumentsDetailed, { qty: '', name: '', notes: '' }] })}>Add Instrument</button>
+    <button type="button" onClick={() => setFormData({ ...formData, instrumentsDetailed: [...formData.instrumentsDetailed, { qty: '', name: '', notes: '' }] })}>Add Instrument</button>
 
     <h2>Implants / Devices</h2>
     <input name="vendors" placeholder="Vendors" value={formData.vendors} onChange={handleChange} />
@@ -236,21 +236,21 @@ return (
         <input placeholder="Qty" value={supply.qty} onChange={e => {
           const copy = [...formData.supplies];
           copy[idx].qty = e.target.value;
-          setFromData({ ...formData, supplies: copy });
+          setFormData({ ...formData, supplies: copy });
         }} />
         <input placeholder="Name" value={supply.name} onChange={e => {
           const copy = [...formData.supplies];
           copy[idx].name = e.target.value;
-          setFromData({ ...formData, supplies: copy });
+          setFormData({ ...formData, supplies: copy });
         }} />
         <input placeholder="Size/Notes" value={supply.sizeOrNotes} onChange={e => {
           const copy = [...formData.supplies];
           copy[idx].sizeOrNotes = e.target.value;
-          setFromData({ ...formData, supplies: copy});
+          setFormData({ ...formData, supplies: copy});
         }} />
       </div>
     ))}
-    <button type="button" onClick={() => setFromData({ ...formData, supplies: [...formData.supplies, { qty: '', name: '', sizeOrNotes: '' }] })}>Add Supply</button>
+    <button type="button" onClick={() => setFormData({ ...formData, supplies: [...formData.supplies, { qty: '', name: '', sizeOrNotes: '' }] })}>Add Supply</button>
 
     <h2>Medications</h2>
     {formData.medications.map ((med, idx) => (
@@ -258,26 +258,26 @@ return (
         <input placeholder="Name" value={med.name} onChange={e => {
           const copy = [...formData.medications];
           copy[idx].name = e.target.value;
-          setFromData({ ...formData, medications: copy });
+          setFormData({ ...formData, medications: copy });
         }} />
         <input placeholder="Dose" value={med.dose} onChange={e => {
           const copy = [...formData.medications];
           copy[idx].dose = e.target.value;
-          setFromData({ ...formData, medications: copy });
+          setFormData({ ...formData, medications: copy });
         }} />
         <input placeholder="Route" value={med.route} onChange={e => {
           const copy = [...formData.medications];
           copy[idx].route = e.target.value;
-          setFromData({ ...formData, medications: copy });
+          setFormData({ ...formData, medications: copy });
         }} />
         <input placeholder="Timing" value={med.timing} onChange={e => {
           const copy = [...formData.medications];
           copy[idx].timing = e.target.value;
-          setFromData({ ...formData, medications: copy });
+          setFormData({ ...formData, medications: copy });
         }} />
       </div>
     ))}
-    <button type="button" onClick={() => setFromData({ ...formData, medications: [...formData.medications, { name: '', dose: '', route: '', timing: ''}] })}>Medications</button>
+    <button type="button" onClick={() => setFormData({ ...formData, medications: [...formData.medications, { name: '', dose: '', route: '', timing: ''}] })}>Medications</button>
 
     <h2>Sutures</h2>
     {formData.sutures.map ((suture, idx) => (
@@ -285,7 +285,7 @@ return (
         <select value={suture.size} onChange={e => {
           const copy = [...formData.sutures];
           copy[idx].size = e.target.value;
-          setFromData({ ...formData, sutures: copy });
+          setFormData({ ...formData, sutures: copy });
         }}>
           <option value="">Select Size</option>
           {["5", "4", "3", "2", "1", "0", "2-0", "3-0", "4-0", "5-0", "6-0", "7-0", "8-0", "9-0", "10-0"].map(opt => <option key={opt} value={opt}>{opt}</option>)}
@@ -293,21 +293,21 @@ return (
         <input placeholder="Type" value={suture.type} onChange={e => {
           const copy = [...formData.sutures];
           copy[idx].type = e.target.value;
-          setFromData({ ...formData, sutures: copy });
+          setFormData({ ...formData, sutures: copy });
         }}/>
         <input placeholder="Needle" value={suture.needle} onChange={e => {
           const copy = [...formData.sutures];
           copy[idx].needle = e.target.value;
-          setFromData({ ...formData, sutures: copy});
+          setFormData({ ...formData, sutures: copy});
         }} />
         <input placeholder="Use Site" value={suture.useSite} onChange={e => {
           const copy = [...formData.sutures];
           copy[idx].useSite = e.target.value;
-          setFromData({ ...formData, sutures: copy });
+          setFormData({ ...formData, sutures: copy });
         }} />
       </div>
     ))}
-    <button type="button" onClick={() => setFromData({ ...formData, sutures: [...formData.sutures, { type: '', size: '', needle: '', useSite: ''}] })}>Add Suture</button>
+    <button type="button" onClick={() => setFormData({ ...formData, sutures: [...formData.sutures, { type: '', size: '', needle: '', useSite: ''}] })}>Add Suture</button>
 
     <h2>Closing Preferences</h2>
     <input name="fascia" placeholder="Fascia" value={formData.fascia} onChange={handleChange} />
